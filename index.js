@@ -1,15 +1,38 @@
 const express = require('express');
+const symbols = require('./symbols');
 const app = express();
-/*
+
 var request = require("request");
 
-// query parameters
-// /stocks/AAPL?fetch=historical
-// /stocks/AAPL?fetch=news
-// /stocks/AAPL?fetch=charts
+app.get('/stocks', (req, res) => {
+  console.log(symbols.Symbol)
+})
+
 app.get('/stocks/:id', (req, res) => {
-    const symbolName = req.params.id;
+    let symbolName = req.params.id;
     let timestamp = Math.floor(Date.now()/1000);
+    switch(symbolName)
+    {
+      case 'AAPL':
+        symbolName = 'AAPL';
+        break;
+      case 'GOOGL':
+        symbolName = 'GOOGL';
+        break;
+      case 'IBM':
+        symbolName = 'IBM';
+        break;
+      case 'MSFT':
+        symbolName = 'MSFT';
+        break;
+      case 'TSLA':
+        symbolName = 'TSLA';
+        break;
+      default:
+        console.log("The symbol is not a valid symbol");
+        break;
+
+    }
 
     var options = {
       method: 'GET',
@@ -23,18 +46,22 @@ app.get('/stocks/:id', (req, res) => {
       },
       headers: {
         'x-rapidapi-host': 'apidojo-yahoo-finance-v1.p.rapidapi.com',
-        'x-rapidapi-key': '93b26d98c8msh56f6f024aa8de21p18ec5ejsn2e4cb3c879'
+        'x-rapidapi-key': '93b26d98c8msh56f6f024aa8de21p18ec5ejsn2e4cb3c87943'
       }
-};
+    };
 
-
-   request(options, function (error, response, body) {
-        if (error) throw new Error(error);
+    request(options, function (error, response, body) {
+      if (error) throw new Error(error);
     
-        res.send(body);
+      res.send(body);
     });
-}); */
+}); 
 
+// query parameters
+// /stocks/AAPL?fetch=historical
+// /stocks/AAPL?fetch=news
+// /stocks/AAPL?fetch=charts
+/*
 const stock= {
   prices: [
   {
@@ -59,7 +86,7 @@ const stock= {
   app.get('/stocks/AAPL', (req, res) => {
     res.send(stock)
   });
-
+*/
 
 app.listen(8080, ()=>{
     console.log('server started on port 8080');
